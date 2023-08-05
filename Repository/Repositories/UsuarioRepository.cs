@@ -20,7 +20,7 @@ namespace Repository.Repositories
         public UsuarioRepository(IConfiguration configuration)
         {
             _configuration = configuration;
-            _connection = new NpgsqlConnection(_configuration.GetConnectionString("localhost"));
+            _connection = new NpgsqlConnection(_configuration.GetConnectionString("drona"));
             _connection.Open();
             
         }

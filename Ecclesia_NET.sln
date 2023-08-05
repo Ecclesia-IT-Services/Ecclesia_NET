@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.6.33829.357
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "Ecclesia\Api.csproj", "{69DDCE0D-4AF3-4F61-BBB9-F6B531134007}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecclesia.Api", "Ecclesia\Ecclesia.Api.csproj", "{69DDCE0D-4AF3-4F61-BBB9-F6B531134007}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Domain", "Domain\Domain.csproj", "{B0713725-1C17-49F1-8DC6-FA8BC70CB522}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecclesia.Domain", "Domain\Ecclesia.Domain.csproj", "{B0713725-1C17-49F1-8DC6-FA8BC70CB522}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Repository", "Repository\Repository.csproj", "{4A713843-BD36-4C2E-AE89-1E999F143B76}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecclesia.Repository", "Repository\Ecclesia.Repository.csproj", "{4A713843-BD36-4C2E-AE89-1E999F143B76}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Service", "Service\Service.csproj", "{6E9792A2-04CA-44C6-8159-AE963908211E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Ecclesia.Service", "Service\Ecclesia.Service.csproj", "{6E9792A2-04CA-44C6-8159-AE963908211E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
