@@ -36,6 +36,18 @@ namespace Repository.Repositories
             await _connection.ExecuteAsync(sql, new { Id = id});
         }
 
+        public async Task<List<Usuario>> GetAllUsuarios()
+        {
+            #region sql
+            var sql = $@"
+                select * from usuario
+            ";
+            #endregion
+
+            var usuarios = await _connection.QueryAsync<Usuario>(sql);
+            return (List<Usuario>)usuarios;
+        }
+
         public async Task<Usuario> GetUsuario(int id)
         {
             #region sql
@@ -46,9 +58,7 @@ namespace Repository.Repositories
 
             var usuario = await _connection.QueryAsync<Usuario>(sql,new {Id = id});
             return (Usuario)usuario.FirstOrDefault();
-        }
-
-       
+        }       
 
         public async Task InsertUsuario(Usuario usuario)
         {

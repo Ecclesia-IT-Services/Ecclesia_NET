@@ -62,6 +62,14 @@ namespace Api.Controllers
             return Ok(usuario);
         }
 
+        [HttpGet]
+        [Route("api/[controller]/GetAllByName/{nome}")]
+        public async Task<IActionResult> BuscarUsuarios(string nome)
+        {
+            var usuario = await _service.GetAllUsuariosByName(nome);
+            return Ok(usuario);
+        }
+
         [HttpDelete]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)

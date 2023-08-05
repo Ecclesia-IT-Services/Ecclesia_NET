@@ -23,6 +23,13 @@ namespace Service.Services
             await _repository.DeleteUsuario(id);
         }
 
+        public async Task<List<Usuario>> GetAllUsuariosByName(string nome)
+        {
+            var usuarios = await _repository.GetAllUsuarios();
+            var filter = usuarios.Where(p => p.Nome.Contains(nome));
+            return (List<Usuario>)usuarios;
+        }
+
         public async Task<Usuario> GetUsuario(int id)
         {
             var usuario = await _repository.GetUsuario(id);
