@@ -1,3 +1,7 @@
+using Ecclesia.Repository.Contracts;
+using Ecclesia.Repository.Repositories;
+using Ecclesia.Service.Contracts;
+using Ecclesia.Service.Services;
 using Repository.Contracts;
 using Repository.Repositories;
 using Service.Contracts;
@@ -13,6 +17,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 builder.Services.AddControllers();
 
+builder.Services.AddScoped<ICargoService, CargoService>();
+builder.Services.AddScoped<ICargoRepository, CargoRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 

@@ -9,20 +9,14 @@ using NpgsqlTypes;
 using System.Xml.Linq;
 using Domain.Enum;
 using System.Data.Common;
+using Ecclesia.Repository.Repositories;
 
 namespace Repository.Repositories
 {
-    public class UsuarioRepository : IUsuarioRepository
+    public class UsuarioRepository : BaseRepository,IUsuarioRepository
     {
-        private NpgsqlConnection _connection;
-        private IConfiguration _configuration;
-
-        public UsuarioRepository(IConfiguration configuration)
+        public UsuarioRepository(IConfiguration configuration) : base(configuration)
         {
-            _configuration = configuration;
-            _connection = new NpgsqlConnection(_configuration.GetConnectionString("drona"));
-            _connection.Open();
-            
         }
 
         public async Task DeleteUsuario(int id)
