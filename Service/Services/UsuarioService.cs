@@ -26,7 +26,7 @@ namespace Service.Services
         public async Task<List<Usuario>> GetAllUsuariosByName(string nome)
         {
             var usuarios = await _repository.GetAllUsuarios();
-            var filter = usuarios.Where(p => p.Nome.Contains(nome));
+            var filter = usuarios.Where(p => p.Nome.Contains(nome)).Where(p => p.Status == "A");
             return (List<Usuario>)usuarios;
         }
 
