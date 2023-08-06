@@ -1,5 +1,5 @@
-﻿using Api.Dto;
-using Domain;
+﻿using Domain;
+using Ecclesia.Api.Dto;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
@@ -18,39 +18,31 @@ namespace Api.Controllers
 
         [HttpPost]
         [Route("api/[controller]")]
-        public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioDto usuarioDto)
+        public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioInsertDto usuarioDto)
         {
             await _service.InsertUsuario(
-                new Usuario(
-                        usuarioDto.Id,
-                        usuarioDto.Senha,
-                        usuarioDto.Nome,
-                        usuarioDto.Senha,
-                        usuarioDto.NivelAcesso,
-                        usuarioDto.DataCriacao,
-                        usuarioDto.UsuarioCriacao,
-                        usuarioDto.DataUltimaAlteracao,
-                        usuarioDto.UsuarioUltimaAlteracao,
-                        usuarioDto.Status));
+                new Usuario{
+                        Login = usuarioDto.Login,
+                        Senha = usuarioDto.Senha,
+                        Nome = usuarioDto.Nome,
+                        NivelAcesso = usuarioDto.NivelAcesso,
+                        UsuarioCriacao = usuarioDto.Usuario
+                });
             return Ok(new {Success = true});
         }
 
         [HttpPut]
         [Route("api/[controller]")]
-        public async Task<IActionResult> AtualizarUsuario([FromBody] UsuarioDto usuarioDto)
+        public async Task<IActionResult> AtualizarUsuario([FromBody] UsuarioUpdateDto usuarioDto)
         {
             await _service.UpdateUsuario(
-                new Usuario(
-                        usuarioDto.Id,
-                        usuarioDto.Senha,
-                        usuarioDto.Nome,
-                        usuarioDto.Senha,
-                        usuarioDto.NivelAcesso,
-                        usuarioDto.DataCriacao,
-                        usuarioDto.UsuarioCriacao,
-                        usuarioDto.DataUltimaAlteracao,
-                        usuarioDto.UsuarioUltimaAlteracao,
-                        usuarioDto.Status));
+                new Usuario {
+                        Id = usuarioDto.Id,
+                        Senha = usuarioDto.Senha,
+                        Nome = usuarioDto.Nome,
+                        NivelAcesso = usuarioDto.NivelAcesso,
+                        UsuarioUltimaAlteracao = usuarioDto.Usuario,
+                        Status = usuarioDto.Status});
             return Ok(new { Success = true });
         }
 

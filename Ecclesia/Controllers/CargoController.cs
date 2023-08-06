@@ -1,11 +1,7 @@
-﻿using Api.Dto;
-using Domain;
-using Ecclesia.Api.Dto;
+﻿using Ecclesia.Api.Dto;
 using Ecclesia.Domain;
 using Ecclesia.Service.Contracts;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Service.Contracts;
 
 namespace Api.Controllers
 {

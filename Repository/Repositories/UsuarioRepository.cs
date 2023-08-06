@@ -84,9 +84,12 @@ namespace Repository.Repositories
             #region sql
             var sql = $@"
                update usuario 
-               set senha = @senha,
+               set nome = @nome,
+                   senha = @senha,
                    nivelacesso = @nivelacesso,
-                   status = @status
+                   status = @status,
+                   usuarioultimaalteracao = @usuarioultimaalteracao,
+                   dataultimaalteracao = now()
                where id = @id
             ";
             #endregion
