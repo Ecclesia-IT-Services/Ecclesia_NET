@@ -1,11 +1,14 @@
 ﻿using Ecclesia.Api.Dto;
 using Ecclesia.Domain;
 using Ecclesia.Service.Contracts;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
 namespace Api.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class CargoController : ControllerBase
     {
         private readonly ICargoService _service;
@@ -15,7 +18,7 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] 
         [Route("api/[controller]")]
         public async Task<IActionResult> CadastrarCargo([FromBody] CargoInsertDto cargoDto)
         {
@@ -29,7 +32,7 @@ namespace Api.Controllers
             return Ok(new { Success = true });
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
         public async Task<IActionResult> AtualizarCargoUsuario([FromBody] CargoUpdateDto cargoDto)
         {
@@ -44,7 +47,7 @@ namespace Api.Controllers
              return Ok(new { Success = true });
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> ConsultarCargo(int id)
         {
@@ -52,7 +55,7 @@ namespace Api.Controllers
             return Ok(cargo);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/GetAllCargosByDescricao/{descricao}")]
         public async Task<IActionResult> BuscarCargo(string descricao)
         {
@@ -60,7 +63,7 @@ namespace Api.Controllers
             return Ok(cargo);
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> DeletarCargo(int id)
         {

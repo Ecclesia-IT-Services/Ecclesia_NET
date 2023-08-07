@@ -1,12 +1,14 @@
 ﻿using Domain;
 using Ecclesia.Api.Dto;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Service.Contracts;
 
 namespace Api.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
     public class UsuarioController : ControllerBase
     {
         private readonly IUsuarioService _service;
@@ -16,7 +18,7 @@ namespace Api.Controllers
             _service = service;
         }
 
-        [HttpPost]
+        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
         public async Task<IActionResult> CadastrarUsuario([FromBody] UsuarioInsertDto usuarioDto)
         {
@@ -31,7 +33,7 @@ namespace Api.Controllers
             return Ok(new {Success = true});
         }
 
-        [HttpPut]
+        [HttpPut, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
         public async Task<IActionResult> AtualizarUsuario([FromBody] UsuarioUpdateDto usuarioDto)
         {
@@ -46,7 +48,7 @@ namespace Api.Controllers
             return Ok(new { Success = true });
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> ConsultarUsuario(int id)
         {
@@ -54,7 +56,7 @@ namespace Api.Controllers
             return Ok(usuario);
         }
 
-        [HttpGet]
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/GetAllByName/{nome}")]
         public async Task<IActionResult> BuscarUsuarios(string nome)
         {
@@ -62,7 +64,7 @@ namespace Api.Controllers
             return Ok(usuario);
         }
 
-        [HttpDelete]
+        [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> DeletarUsuario(int id)
         {

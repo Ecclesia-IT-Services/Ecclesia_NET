@@ -28,7 +28,7 @@ namespace Ecclesia.Service.Services
         {
             var cargos = await _repository.GetAllCargos();
             var filter = cargos.Where(p => p.Descricao.Contains(descricao)).Where(p => p.Status == "A");
-            return (List<Cargo>)cargos;
+            return filter.ToList();
         }
 
         public async Task<Cargo> GetCargo(int id)
