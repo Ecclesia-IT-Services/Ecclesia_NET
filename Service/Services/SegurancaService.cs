@@ -1,18 +1,12 @@
 ﻿using Domain;
 using Ecclesia.Domain;
-using Ecclesia.Repository.Contracts;
 using Ecclesia.Service.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repository.Contracts;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
 using System.Net;
 using System.Text;
-using System.Threading.Tasks;
-using System.Web.Http;
 
 namespace Ecclesia.Service.Services
 {
