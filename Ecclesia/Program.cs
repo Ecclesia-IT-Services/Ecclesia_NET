@@ -1,3 +1,4 @@
+using Ecclesia.Repository;
 using Ecclesia.Repository.Contracts;
 using Ecclesia.Repository.Repositories;
 using Ecclesia.Service.Contracts;
@@ -54,6 +55,11 @@ builder.Services.AddScoped<ICargoRepository, CargoRepository>();
 builder.Services.AddScoped<IUsuarioService, UsuarioService>();
 builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddScoped<ISegurancaService, SegurancaService>();
+builder.Services.AddScoped<IIgrejaService, IgrejaService>();
+builder.Services.AddScoped<IIgrejaRepository, IgrejaRepository>();
+
+
+
 
 builder.Services.AddAuthentication() // Cookie by default  
     .AddCookie(options =>

@@ -1,6 +1,8 @@
 ﻿using Domain;
+using Ecclesia.Domain;
 using Repository.Contracts;
 using Service.Contracts;
+using System.Net;
 
 namespace Service.Services
 {
@@ -30,10 +32,22 @@ namespace Service.Services
             var usuario = await _repository.GetUsuario(id);
             return usuario;
         }
-
+        
         public async Task InsertUsuario(Usuario usuario)
         {
+            var registro = _repository.GetAllUsuarios()
+                .Result.Where(p => p.Login == usuario.Login);
+
+            if (registro.Any()) throw new BusinessHttpResponseException(HttpStatusCode.BadRequest);
+
             await _repository.InsertUsuario(usuario);
+        }
+
+
+        public async Task<bool> RegistroExiste(int id)
+        {
+            var existingUsuario = await _repository.GetAllUsuarios();
+            return existingUsuario != null;
         }
 
         public async Task UpdateUsuario(Usuario usuario)

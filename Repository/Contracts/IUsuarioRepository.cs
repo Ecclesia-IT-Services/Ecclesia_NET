@@ -7,7 +7,7 @@ namespace Repository.Contracts
         Task InsertUsuario(Usuario usuario);
         Task UpdateUsuario(Usuario usuario);
         Task<Usuario> GetUsuario(int id);
-        Task<List<Usuario>> GetAllUsuarios();
+        Task<List<Usuario>> GetAllUsuarios();   
         Task DeleteUsuario(int id);
     }
 }

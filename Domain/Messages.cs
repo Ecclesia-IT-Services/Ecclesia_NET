@@ -6,6 +6,7 @@ namespace Ecclesia.Domain
     {
         public static string RegistroNaoEncontrado { get { return "Registro Não Encontrado"; }}
         public static string NaoAutorizado { get { return "Não Autorizado"; } }
+        public static string LoginJaExiste { get { return " Esse login já existe"; } }
 
         public static HttpResponseMessage Message(HttpStatusCode statusCode)
         {
@@ -16,6 +17,10 @@ namespace Ecclesia.Domain
             }else if (statusCode == HttpStatusCode.Unauthorized)
             {
                 message = Messages.NaoAutorizado;
+            }
+            else if (statusCode == HttpStatusCode.BadRequest)
+            {
+                message = Messages.LoginJaExiste;
             }
             var resp = new HttpResponseMessage(statusCode)
             {
