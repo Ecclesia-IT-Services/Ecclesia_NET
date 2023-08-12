@@ -4,57 +4,71 @@ using Ecclesia.Service.Contracts;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System.Net;
 
-namespace Api.Controllers
+namespace Ecclesia.Api.Controllers
 {
     [ApiController, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class CargoController : ControllerBase
-    {
-        private readonly ICargoService _service;
 
-        public CargoController(ICargoService service)
+    public class IgrejaController : Controller
+    {
+        private readonly IIgrejaService _service;
+
+        public IgrejaController(IIgrejaService service)
         {
             _service = service;
         }
 
-        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)] 
+        [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
-        public async Task<IActionResult> CadastrarCargo([FromBody] CargoInsertDto cargoDto)
+        public async Task<IActionResult> CadastrarIgreja([FromBody] IgrejaInsertDto IgrejaDto)
         {
             try
             {
-                await _service.InsertCargo(
-                new Cargo
+                await _service.InsertIgreja(
+                new Igreja
                 {
-                    Descricao = cargoDto.Descricao,
-                    UsuarioCriacao = cargoDto.Usuario,
+                    Nome = IgrejaDto.Nome,
+                    Logradouro = IgrejaDto.Logradouro,
+                    Numero = IgrejaDto.Numero,
+                    Complemento= IgrejaDto.Complemento,
+                    Bairro= IgrejaDto.Bairro,
+                    Cidade= IgrejaDto.Cidade,
+                    Uf= IgrejaDto.Uf,
+                    UsuarioCriacao = IgrejaDto.Usuario,
                 });
 
                 return Ok(new { Success = true });
             }
-            catch(BusinessHttpResponseException ex)
+            catch (BusinessHttpResponseException ex)
             {
                 return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
             }
             catch (Exception ex)
             {
                 return BadRequest(new { Succes = false, Error = ex.Message });
-            }            
+            }
         }
 
         [HttpPut, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
-        public async Task<IActionResult> AtualizarCargoUsuario([FromBody] CargoUpdateDto cargoDto)
+        public async Task<IActionResult> AtualizarIgrejaUsuario([FromBody] IgrejaUpdateDto IgrejaDto)
         {
             try
             {
-                await _service.UpdateCargo(
-                new Cargo
+                await _service.UpdateIgreja(
+                new Igreja
                 {
-                    Id = cargoDto.Id,
-                    Descricao = cargoDto.Descricao,
-                    UsuarioUltimaAlteracao = cargoDto.Usuario,
-                    Status = cargoDto.Status
+                    Id = IgrejaDto.Id,
+                    Nome = IgrejaDto.Nome,
+                    Numero = IgrejaDto.Numero,
+                    Complemento = IgrejaDto.Complemento,
+                    Uf= IgrejaDto.Uf,
+                    Bairro= IgrejaDto.Bairro,
+                    Cidade= IgrejaDto.Cidade,
+                    Logradouro= IgrejaDto.Logradouro,             
+                    UsuarioUltimaAlteracao = IgrejaDto.Usuario,
+                    Status = IgrejaDto.Status
                 });
                 return Ok(new { Success = true });
             }
@@ -70,12 +84,12 @@ namespace Api.Controllers
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> ConsultarCargo(int id)
+        public async Task<IActionResult> ConsultarIgreja(int id)
         {
             try
             {
-                var cargo = await _service.GetCargo(id);
-                return Ok(cargo);
+                var igreja = await _service.GetIgreja(id);
+                return Ok(igreja);
             }
             catch (BusinessHttpResponseException ex)
             {
@@ -88,13 +102,13 @@ namespace Api.Controllers
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/[controller]/GetAllCargosByDescricao/{descricao}")]
-        public async Task<IActionResult> BuscarCargo(string descricao)
+        [Route("api/[controller]/GetAllIgrejasByNome/{nome}")]
+        public async Task<IActionResult> BuscarIgreja(string nome)
         {
             try
             {
-                var cargo = await _service.GetAllCargosByDescricao(descricao);
-                return Ok(cargo);
+                var igreja = await _service.GetAllIgrejasByNome(nome);
+                return Ok(igreja);
             }
             catch (BusinessHttpResponseException ex)
             {
@@ -108,11 +122,11 @@ namespace Api.Controllers
 
         [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> DeletarCargo(int id)
+        public async Task<IActionResult> DeletarIgreja(int id)
         {
             try
             {
-                await _service.DeleteCargo(id);
+                await _service.DeleteIgreja(id);
                 return Ok(new { Success = true });
             }
             catch (BusinessHttpResponseException ex)
@@ -124,5 +138,7 @@ namespace Api.Controllers
                 return BadRequest(new { Succes = false, Error = ex.Message });
             }
         }
+
+
     }
 }

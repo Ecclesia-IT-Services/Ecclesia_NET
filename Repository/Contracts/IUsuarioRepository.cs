@@ -1,9 +1,4 @@
 ﻿using Domain;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Repository.Contracts
 {
@@ -12,7 +7,7 @@ namespace Repository.Contracts
         Task InsertUsuario(Usuario usuario);
         Task UpdateUsuario(Usuario usuario);
         Task<Usuario> GetUsuario(int id);
-        Task<List<Usuario>> GetAllUsuarios();
+        Task<List<Usuario>> GetAllUsuarios();   
         Task DeleteUsuario(int id);
     }
 }
