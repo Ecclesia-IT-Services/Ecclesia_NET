@@ -1,15 +1,12 @@
 ﻿using Domain;
-using Ecclesia.Repository.Contracts;
+using Ecclesia.Domain;
 using Ecclesia.Service.Contracts;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using Repository.Contracts;
-using System;
-using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
-using System.Linq;
+using System.Net;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace Ecclesia.Service.Services
 {
@@ -45,9 +42,12 @@ namespace Ecclesia.Service.Services
             var list = await _repository
                 .GetAllUsuarios();
             var filter = list
-                .Where(p => p.Login == usuario.Login).First();
-            return filter.Senha == usuario.Senha;
-                
+                .Where(p => p.Login == usuario.Login);
+            if (!filter.Any())
+            {
+                throw new BusinessHttpResponseException(Messages.Message(HttpStatusCode.NotFound));
+            }               
+            return filter.First().Senha == usuario.Senha;                
         }
     }
 }

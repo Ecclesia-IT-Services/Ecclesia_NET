@@ -1,6 +1,4 @@
-﻿using Domain.Enum;
-
-namespace Ecclesia.Api.Dto
+﻿namespace Ecclesia.Api.Dto
 {
     public class UsuarioUpdateDto
     {

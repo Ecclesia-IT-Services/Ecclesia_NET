@@ -1,10 +1,9 @@
 ﻿using Domain;
 using Ecclesia.Api.Dto;
+using Ecclesia.Domain;
 using Ecclesia.Service.Contracts;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+using System.Net;
 
 namespace Api.Controllers
 {
@@ -21,17 +20,25 @@ namespace Api.Controllers
         [Route("api/[controller]")]
         public async Task<IActionResult> Login([FromBody] LoginDto login)
         {
-            var usuario = new Usuario { Login = login.UserName, Senha = login.Password };
-            bool resultado = await _service.ValidarUsuario(usuario);
-            if (resultado)
+            try
             {
-                var tokenString = _service.GerarTokenJwt();
-                return Ok(new { token = tokenString });
-            }
-            else
+                var usuario = new Usuario { Login = login.UserName, Senha = login.Password };
+                if (await _service.ValidarUsuario(usuario))
+                {
+                    var tokenString = _service.GerarTokenJwt();
+                    return Ok(new { Sucess = true, token = tokenString });
+                }
+                else
+                {
+                    throw new BusinessHttpResponseException(Messages.Message(HttpStatusCode.Unauthorized));
+                }
+            }catch (BusinessHttpResponseException ex)
             {
-                return Unauthorized();
-            }
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response});
+            }catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            } 
         }
     }
 }

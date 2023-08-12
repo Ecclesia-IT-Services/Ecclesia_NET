@@ -1,14 +1,7 @@
 ﻿using Domain;
 using Repository.Contracts;
-using Npgsql;
 using Microsoft.Extensions.Configuration;
 using Dapper;
-using System.Reflection.Metadata.Ecma335;
-using System.Data;
-using NpgsqlTypes;
-using System.Xml.Linq;
-using Domain.Enum;
-using System.Data.Common;
 using Ecclesia.Repository.Repositories;
 
 namespace Repository.Repositories
