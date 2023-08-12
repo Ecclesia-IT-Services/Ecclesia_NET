@@ -42,12 +42,13 @@ namespace Ecclesia.Repository.Repositories
         public async Task<List<Pessoa>> GetAll(string nome)
         {
             #region sql
+            var like = $"%{nome}%";
             var sql = $@"
-                select * from pessoa where nome like '%@nome%'
+                select * from pessoa where nome like @like
             ";
             #endregion
 
-            var regs = await _connection.QueryAsync<Pessoa>(sql, new {Nome = nome});
+            var regs = await _connection.QueryAsync<Pessoa>(sql, new {Like = like});
             return (List<Pessoa>)regs;
         }
 
