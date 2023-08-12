@@ -1,3 +1,4 @@
+using Ecclesia.Domain;
 using Ecclesia.Repository;
 using Ecclesia.Repository.Contracts;
 using Ecclesia.Repository.Repositories;
@@ -67,6 +68,8 @@ builder.Services.AddTransient<IDizimoService, DizimoService>();
 builder.Services.AddTransient<IDizimoRepository, DizimoRepository>();
 builder.Services.AddTransient<ICelulaService, CelulaService>();
 builder.Services.AddTransient<ICelulaRepository, CelulaRepository>();
+builder.Services.AddTransient<IOrganizacaoService, OrganizacaoService>();
+builder.Services.AddTransient<IOrganizacaoRepository, OrganizacaoRepository>();
 
 builder.Services.AddAuthentication() // Cookie by default  
     .AddCookie(options =>
