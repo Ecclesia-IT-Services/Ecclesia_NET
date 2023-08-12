@@ -4,6 +4,7 @@ using Ecclesia.Service.Contracts;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -20,6 +21,8 @@ namespace Ecclesia.Service.Services
 
         public async Task Delete(int id)
         {
+            if (await _repository.Get(id) == null)
+                throw new BusinessHttpResponseException(Messages.Message(HttpStatusCode.NotFound));
             await _repository.Delete(id);
         }
 
@@ -40,6 +43,8 @@ namespace Ecclesia.Service.Services
 
         public async Task Update(Pessoa pessoa)
         {
+            if (await _repository.Get(pessoa.Id) == null)
+                throw new BusinessHttpResponseException(Messages.Message(HttpStatusCode.NotFound));
             await _repository.Update(pessoa);
         }
     }

@@ -21,10 +21,12 @@ namespace Ecclesia.Api.Controllers
         [Route("api/[controller]")]
         public async Task<IActionResult> CadastrarReuniao([FromBody] ReuniaoInsertDto reuniaoDto)
         {
-            await _service.Insert(
+            try
+            {
+                await _service.Insert(
                 new Reuniao
                 {
-                    Igreja = reuniaoDto.Igreja,                    
+                    Igreja = reuniaoDto.Igreja,
                     Celula = reuniaoDto.Celula,
                     Data = reuniaoDto.Data,
                     Pregador = reuniaoDto.Pregador,
@@ -34,17 +36,28 @@ namespace Ecclesia.Api.Controllers
                     ValorOfertas = reuniaoDto.ValorOfertas,
                     ValorOfertasEspeciais = reuniaoDto.ValorOfertasEspeciais,
                     ValorPrimicias = reuniaoDto.ValorPrimicias,
-                    UsuarioCriacao = reuniaoDto.Usuario,                    
+                    UsuarioCriacao = reuniaoDto.Usuario,
                 });
 
-            return Ok(new { Success = true });
+                return Ok(new { Success = true });
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
 
         [HttpPut, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
         public async Task<IActionResult> AtualizarREeuniao([FromBody] ReuniaoUpdateDto reuniaoDto)
         {
-            await _service.Update(
+            try
+            {
+                await _service.Update(
                 new Reuniao
                 {
                     Id = reuniaoDto.Id,
@@ -58,36 +71,89 @@ namespace Ecclesia.Api.Controllers
                     UsuarioUltimaAlteracao = reuniaoDto.Usuario,
                     Status = reuniaoDto.Status,
                 });
-            return Ok(new { Success = true });
+                return Ok(new { Success = true });
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> ConsultarReuniao(int id)
         {
-            return Ok(await _service.Get(id));
+            try
+            {
+                return Ok(await _service.Get(id));
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/GetAllByIgreja/{dataInicio}/{dataFim}/{igreja}")]
         public async Task<IActionResult> BuscarReuniaoByIgreja(DateTime dataInicio, DateTime dataFim, int igreja)
         {
-            return Ok(await _service.GetAllByIgreja(dataInicio, dataFim, igreja));
+            try
+            {
+                return Ok(await _service.GetAllByIgreja(dataInicio, dataFim, igreja));
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/GetAllByCelula/{dataInicio}/{dataFim}/{celula}")]
         public async Task<IActionResult> BuscarReuniaoByCelula(DateTime dataInicio, DateTime dataFim, int celula)
         {
-            return Ok(await _service.GetAllByCelula(dataInicio, dataFim, celula));
+            try
+            {
+                return Ok(await _service.GetAllByCelula(dataInicio, dataFim, celula));
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
 
         [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> DeletarReuniao(int id)
         {
-            await _service.Delete(id);
-            return Ok(new { Success = true });
+            try
+            {
+                await _service.Delete(id);
+                return Ok(new { Success = true });
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
         }
     }
 }
