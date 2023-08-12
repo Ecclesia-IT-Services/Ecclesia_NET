@@ -6,12 +6,10 @@ using System.Threading.Tasks;
 
 namespace Ecclesia.Domain
 {
-    public class Igreja : Endereco
+    public class Celula : Endereco
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public int Igreja { get; set; }
     }
 }
- 
-
-
