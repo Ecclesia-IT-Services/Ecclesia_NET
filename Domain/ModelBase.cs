@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace Ecclesia.Domain
 {
-    public class ModelBase
+    public abstract class ModelBase
     {
         public DateTime DataCriacao { get; set; }
         public int UsuarioCriacao { get; set; }
