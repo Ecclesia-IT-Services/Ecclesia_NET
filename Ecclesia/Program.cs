@@ -55,6 +55,8 @@ builder.Services.AddTransient<ICargoRepository, CargoRepository>();
 builder.Services.AddTransient<IUsuarioService, UsuarioService>();
 builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<ISegurancaService, SegurancaService>();
+builder.Services.AddTransient<IReuniaoService, ReuniaoService>();
+builder.Services.AddTransient<IReuniaoRepository, ReuniaoRepository>();
 builder.Services.AddTransient<IIgrejaService, IgrejaService>();
 builder.Services.AddTransient<IIgrejaRepository, IgrejaRepository>();
 
