@@ -7,36 +7,32 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace Ecclesia.Api.Controllers
 {
-    [ApiController, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-    public class ReuniaoController : ControllerBase
+    public class PessoaController : ControllerBase
     {
-        private readonly IReuniaoService _service;
+        private readonly IPessoaService _service;
 
-        public ReuniaoController(IReuniaoService service)
+        public PessoaController(IPessoaService service)
         {
             _service = service;
         }
 
         [HttpPost, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
-        public async Task<IActionResult> CadastrarReuniao([FromBody] ReuniaoInsertDto reuniaoDto)
+        public async Task<IActionResult> CadastrarPessoa([FromBody] PessoaInsertDto dto)
         {
             try
             {
                 await _service.Insert(
-                new Reuniao
+                new Pessoa
                 {
-                    Igreja = reuniaoDto.Igreja,
-                    Celula = reuniaoDto.Celula,
-                    Data = reuniaoDto.Data,
-                    Pregador = reuniaoDto.Pregador,
-                    QuantidadeParticipantes = reuniaoDto.QuantidadeParticipantes,
-                    QuantidadeVisitantes = reuniaoDto.QuantidadeVisitantes,
-                    QuantidadeCriancas = reuniaoDto.QuantidadeCriancas,
-                    ValorOfertas = reuniaoDto.ValorOfertas,
-                    ValorOfertasEspeciais = reuniaoDto.ValorOfertasEspeciais,
-                    ValorPrimicias = reuniaoDto.ValorPrimicias,
-                    UsuarioCriacao = reuniaoDto.Usuario,
+                    Nome = dto.Nome,
+                    DataNascimento = dto.DataNascimento,
+                    DataIngresso = dto.DataIngresso,
+                    Igreja = dto.Igreja,
+                    Celula = dto.Celula,
+                    Cargo = dto.Cargo,
+                    DataBatismo = dto.DataBatismo,
+                    UsuarioCriacao = dto.Usuario
                 });
 
                 return Ok(new { Success = true });
@@ -53,23 +49,23 @@ namespace Ecclesia.Api.Controllers
 
         [HttpPut, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]")]
-        public async Task<IActionResult> AtualizarREeuniao([FromBody] ReuniaoUpdateDto reuniaoDto)
+        public async Task<IActionResult> AtualizarPessoa([FromBody] PessoaUpdateDto dto)
         {
             try
             {
                 await _service.Update(
-                new Reuniao
+                new Pessoa
                 {
-                    Id = reuniaoDto.Id,
-                    Pregador = reuniaoDto.Pregador,
-                    QuantidadeParticipantes = reuniaoDto.QuantidadeParticipantes,
-                    QuantidadeVisitantes = reuniaoDto.QuantidadeVisitantes,
-                    QuantidadeCriancas = reuniaoDto.QuantidadeCriancas,
-                    ValorOfertas = reuniaoDto.ValorOfertas,
-                    ValorOfertasEspeciais = reuniaoDto.ValorOfertasEspeciais,
-                    ValorPrimicias = reuniaoDto.ValorPrimicias,
-                    UsuarioUltimaAlteracao = reuniaoDto.Usuario,
-                    Status = reuniaoDto.Status,
+                    Id = dto.Id,
+                    Nome = dto.Nome,
+                    DataNascimento = dto.DataNascimento,
+                    DataIngresso = dto.DataIngresso,
+                    Igreja = dto.Igreja,
+                    Celula = dto.Celula,
+                    Cargo = dto.Cargo,
+                    DataBatismo = dto.DataBatismo,
+                    UsuarioUltimaAlteracao = dto.Usuario,
+                    Status = dto.Status,
                 });
                 return Ok(new { Success = true });
             }
@@ -85,7 +81,7 @@ namespace Ecclesia.Api.Controllers
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> ConsultarReuniao(int id)
+        public async Task<IActionResult> ConsultarPessoa(int id)
         {
             try
             {
@@ -102,30 +98,12 @@ namespace Ecclesia.Api.Controllers
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/[controller]/GetAllByIgreja/{dataInicio}/{dataFim}/{igreja}")]
-        public async Task<IActionResult> BuscarReuniaoByIgreja(DateTime dataInicio, DateTime dataFim, int igreja)
+        [Route("api/[controller]/GetAll/{nome}")]
+        public async Task<IActionResult> BuscarPessoas(string nome)
         {
             try
             {
-                return Ok(await _service.GetAllByIgreja(dataInicio, dataFim, igreja));
-            }
-            catch (BusinessHttpResponseException ex)
-            {
-                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
-            }
-            catch (Exception ex)
-            {
-                return BadRequest(new { Succes = false, Error = ex.Message });
-            }
-        }
-
-        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/[controller]/GetAllByCelula/{dataInicio}/{dataFim}/{celula}")]
-        public async Task<IActionResult> BuscarReuniaoByCelula(DateTime dataInicio, DateTime dataFim, int celula)
-        {
-            try
-            {
-                return Ok(await _service.GetAllByCelula(dataInicio, dataFim, celula));
+                return Ok(await _service.GetAll(nome));
             }
             catch (BusinessHttpResponseException ex)
             {
@@ -139,7 +117,7 @@ namespace Ecclesia.Api.Controllers
 
         [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
-        public async Task<IActionResult> DeletarReuniao(int id)
+        public async Task<IActionResult> DeletarPessoa(int id)
         {
             try
             {
