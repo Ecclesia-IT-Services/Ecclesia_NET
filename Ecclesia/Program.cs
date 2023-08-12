@@ -63,6 +63,8 @@ builder.Services.AddTransient<IPessoaService, PessoaService>();
 builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
 builder.Services.AddTransient<INivelAcessoService, NivelAcessoService>();
 builder.Services.AddTransient<INivelAcessoRepository, NivelAcessoRepository>();
+builder.Services.AddTransient<IDizimoService, DizimoService>();
+builder.Services.AddTransient<IDizimoRepository, DizimoRepository>();
 
 builder.Services.AddAuthentication() // Cookie by default  
     .AddCookie(options =>
