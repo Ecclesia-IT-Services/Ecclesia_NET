@@ -56,6 +56,8 @@ builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
 builder.Services.AddTransient<ISegurancaService, SegurancaService>();
 builder.Services.AddTransient<IReuniaoService, ReuniaoService>();
 builder.Services.AddTransient<IReuniaoRepository, ReuniaoRepository>();
+builder.Services.AddTransient<IPessoaService, PessoaService>();
+builder.Services.AddTransient<IPessoaRepository, PessoaRepository>();
 
 builder.Services.AddAuthentication() // Cookie by default  
     .AddCookie(options =>
