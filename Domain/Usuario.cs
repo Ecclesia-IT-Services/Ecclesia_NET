@@ -1,4 +1,6 @@
-﻿namespace Domain
+﻿using Ecclesia.Domain;
+
+namespace Domain
 {
     public class Usuario : ModelBase
     {
