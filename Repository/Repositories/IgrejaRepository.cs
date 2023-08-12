@@ -28,15 +28,16 @@ namespace Ecclesia.Repository
         }
 
        
-        public async Task<List<Igreja>> GetAllIgrejas()
+        public async Task<List<Igreja>> GetAllIgrejas(string nome)
         {
             #region sql
             var sql = $@"
-                select * from 
+                select * from igreja where nome LIKE '%@nome%'
             ";
             #endregion
 
-            var igrejas = await _connection.QueryAsync<Igreja>(sql);
+            var igrejas = await _connection.QueryAsync<Igreja>(sql, new {Nome = nome});
+            
             return (List<Igreja>)igrejas;
         }
         public async Task<Igreja> GetIgreja(int id)
@@ -56,18 +57,28 @@ namespace Ecclesia.Repository
             var sql = $@"
                 insert into igreja
                 (   
-                     nome
-                     logradouro
-                     numero
-                     complemento
-                     bairro
-                     cidade
-                     uf
-                     usuarioCriacao              
+                     nome,
+                     logradouro,
+                     numero,
+                     complemento,
+                     bairro,
+                     cidade,
+                     uf,
+                     usuarioCriacao,
+                     dataCriacao
+
                 ) values 
                 (
-                    @nome, 
-                    @usuariocriacao               
+                     @nome,
+                     @logradouro,
+                     @numero,
+                     @complemento,
+                     @bairro,
+                     @cidade,
+                     @uf,
+                     @usuarioCriacao,
+                     now()
+
                 );
             ";
             #endregion
@@ -82,6 +93,12 @@ namespace Ecclesia.Repository
             var sql = $@"
                update igreja 
                set nome = @nome,
+                   logradouro = @logradouro,
+                   numero = @numero,
+                   complemento = @complemento,
+                   bairro = @bairro,
+                   cidade = @cidade,
+                   uf = @uf,
                    status = @status,
                    usuarioultimaalteracao = @usuarioultimaalteracao,
                    dataultimaalteracao = now()

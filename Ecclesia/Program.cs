@@ -50,13 +50,13 @@ builder.Services.AddSwaggerGen(c =>
 
 builder.Services.AddControllers();
 
-builder.Services.AddScoped<ICargoService, CargoService>();
-builder.Services.AddScoped<ICargoRepository, CargoRepository>();
-builder.Services.AddScoped<IUsuarioService, UsuarioService>();
-builder.Services.AddScoped<IUsuarioRepository, UsuarioRepository>();
-builder.Services.AddScoped<ISegurancaService, SegurancaService>();
-builder.Services.AddScoped<IIgrejaService, IgrejaService>();
-builder.Services.AddScoped<IIgrejaRepository, IgrejaRepository>();
+builder.Services.AddTransient<ICargoService, CargoService>();
+builder.Services.AddTransient<ICargoRepository, CargoRepository>();
+builder.Services.AddTransient<IUsuarioService, UsuarioService>();
+builder.Services.AddTransient<IUsuarioRepository, UsuarioRepository>();
+builder.Services.AddTransient<ISegurancaService, SegurancaService>();
+builder.Services.AddTransient<IIgrejaService, IgrejaService>();
+builder.Services.AddTransient<IIgrejaRepository, IgrejaRepository>();
 
 
 

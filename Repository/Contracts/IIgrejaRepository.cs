@@ -12,7 +12,7 @@ namespace Ecclesia.Repository.Contracts
         Task InsertIgreja(Igreja igreja);
         Task UpdateIgreja(Igreja igreja);
         Task<Igreja> GetIgreja(int id);
-        Task<List<Igreja>> GetAllIgrejas();
+        Task<List<Igreja>> GetAllIgrejas(string nome);
         Task DeleteIgreja(int id);
     }
 }

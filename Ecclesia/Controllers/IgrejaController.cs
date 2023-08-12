@@ -62,6 +62,11 @@ namespace Ecclesia.Api.Controllers
                     Id = IgrejaDto.Id,
                     Nome = IgrejaDto.Nome,
                     Numero = IgrejaDto.Numero,
+                    Complemento = IgrejaDto.Complemento,
+                    Uf= IgrejaDto.Uf,
+                    Bairro= IgrejaDto.Bairro,
+                    Cidade= IgrejaDto.Cidade,
+                    Logradouro= IgrejaDto.Logradouro,             
                     UsuarioUltimaAlteracao = IgrejaDto.Usuario,
                     Status = IgrejaDto.Status
                 });
@@ -97,7 +102,7 @@ namespace Ecclesia.Api.Controllers
         }
 
         [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
-        [Route("api/[controller]/GetAllIgrejasByDescricao/{descricao}")]
+        [Route("api/[controller]/GetAllIgrejasByNome/{nome}")]
         public async Task<IActionResult> BuscarIgreja(string nome)
         {
             try
