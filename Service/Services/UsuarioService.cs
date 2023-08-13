@@ -22,9 +22,8 @@ namespace Service.Services
 
         public async Task<List<Usuario>> GetAllUsuariosByName(string nome)
         {
-            var usuarios = await _repository.GetAllUsuarios();
-            var filter = usuarios.Where(p => p.Nome.Contains(nome)).Where(p => p.Status == "A");
-            return filter.ToList();
+            var usuarios = await _repository.GetAllUsuarios(nome);            
+            return usuarios.ToList();
         }
 
         public async Task<Usuario> GetUsuario(int id)
@@ -35,19 +34,12 @@ namespace Service.Services
         
         public async Task InsertUsuario(Usuario usuario)
         {
-            var registro = _repository.GetAllUsuarios()
-                .Result.Where(p => p.Login == usuario.Login);
+            var registro = _repository.GetUsuario(usuario.Login);
 
-            if (registro.Any()) throw new BusinessHttpResponseException(HttpStatusCode.BadRequest);
+            if (registro != null) //login já existe 
+                throw new BusinessHttpResponseException(HttpStatusCode.BadRequest);
 
             await _repository.InsertUsuario(usuario);
-        }
-
-
-        public async Task<bool> RegistroExiste(int id)
-        {
-            var existingUsuario = await _repository.GetAllUsuarios();
-            return existingUsuario != null;
         }
 
         public async Task UpdateUsuario(Usuario usuario)

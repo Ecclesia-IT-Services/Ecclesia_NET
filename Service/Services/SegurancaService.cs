@@ -39,15 +39,12 @@ namespace Ecclesia.Service.Services
 
         public async Task<bool> ValidarUsuario(Usuario usuario)
         {
-            var list = await _repository
-                .GetAllUsuarios();
-            var filter = list
-                .Where(p => p.Login == usuario.Login);
-            if (!filter.Any())
-            {
+            var reg = await _repository.GetUsuario(usuario.Login);
+
+            if (reg == null)
                 throw new BusinessHttpResponseException(Messages.Message(HttpStatusCode.NotFound));
-            }               
-            return filter.First().Senha == usuario.Senha;                
+            
+            return reg.Senha == usuario.Senha;                
         }
     }
 }

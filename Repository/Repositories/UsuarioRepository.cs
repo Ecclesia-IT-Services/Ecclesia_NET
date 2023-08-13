@@ -23,15 +23,16 @@ namespace Repository.Repositories
             await _connection.ExecuteAsync(sql, new { Id = id});
         }
 
-        public async Task<List<Usuario>> GetAllUsuarios()
+        public async Task<List<Usuario>> GetAllUsuarios(string nome)
         {
+            var like = $"%{nome}%";
             #region sql
             var sql = $@"
-                select * from usuario
+                select * from usuario where nome like @like
             ";
             #endregion
 
-            var usuarios = await _connection.QueryAsync<Usuario>(sql);
+            var usuarios = await _connection.QueryAsync<Usuario>(sql, new {Like = like});
             return (List<Usuario>)usuarios;
         }
 
@@ -45,7 +46,19 @@ namespace Repository.Repositories
 
             var usuario = await _connection.QueryAsync<Usuario>(sql,new {Id = id});
             return (Usuario)usuario.FirstOrDefault();
-        }       
+        }
+
+        public async Task<Usuario> GetUsuario(string login)
+        {
+            #region sql
+            var sql = $@"
+                select * from usuario where login = @login
+            ";
+            #endregion
+
+            var usuario = await _connection.QueryAsync<Usuario>(sql, new { Login = login });
+            return (Usuario)usuario.FirstOrDefault();
+        }
 
         public async Task InsertUsuario(Usuario usuario)
         {

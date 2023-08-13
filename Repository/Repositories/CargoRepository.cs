@@ -20,15 +20,16 @@ namespace Ecclesia.Repository.Repositories
 
             await _connection.ExecuteAsync(sql, new { Id = id });
         }
-        public async Task<List<Cargo>> GetAllCargos()
+        public async Task<List<Cargo>> GetAllCargos(string descricao)
         {
+            var like = $"%{descricao}%";
             #region sql
             var sql = $@"
-                select * from cargo
+                select * from cargo where descricao like @like
             ";
             #endregion
 
-            var cargos = await _connection.QueryAsync<Cargo>(sql);
+            var cargos = await _connection.QueryAsync<Cargo>(sql, new {Like = like});
             return (List<Cargo>)cargos;
         }
         public async Task<Cargo> GetCargo(int id)
