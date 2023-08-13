@@ -23,9 +23,8 @@ namespace Ecclesia.Service.Services
 
         public async Task<List<Cargo>> GetAllCargosByDescricao(string descricao)
         {
-            var cargos = await _repository.GetAllCargos();
-            var filter = cargos.Where(p => p.Descricao.Contains(descricao)).Where(p => p.Status == "A");
-            return filter.ToList();
+            var cargos = await _repository.GetAllCargos(descricao);     
+            return cargos.ToList();
         }
 
         public async Task<Cargo> GetCargo(int id)

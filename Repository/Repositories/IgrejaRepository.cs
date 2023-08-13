@@ -30,13 +30,14 @@ namespace Ecclesia.Repository
        
         public async Task<List<Igreja>> GetAllIgrejas(string nome)
         {
+            var like = $"%{nome}%";
             #region sql
             var sql = $@"
-                select * from igreja where nome LIKE '%@nome%'
+                select * from igreja where nome like @like
             ";
             #endregion
 
-            var igrejas = await _connection.QueryAsync<Igreja>(sql, new {Nome = nome});
+            var igrejas = await _connection.QueryAsync<Igreja>(sql, new {Like = like});
             
             return (List<Igreja>)igrejas;
         }

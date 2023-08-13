@@ -29,8 +29,7 @@ namespace Ecclesia.Service.Services
         public async Task<List<Igreja>> GetAllIgrejasByNome(string nome)
         {
             var igrejas = await _repository.GetAllIgrejas(nome);
-            var filter = igrejas.Where(p => p.Nome.Contains(nome)).Where(p => p.Status == "A");
-            return filter.ToList();
+            return igrejas.ToList();
         }
 
         public async Task<Igreja> GetIgreja(int id)
