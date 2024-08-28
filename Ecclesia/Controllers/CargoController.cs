@@ -106,6 +106,25 @@ namespace Api.Controllers
             }
         }
 
+        [HttpGet, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [Route("api/[controller]/GetAllCargos")]
+        public async Task<IActionResult> BuscarAllCargos()
+        {
+            try
+            {
+                var cargo = await _service.GetAllCargos();
+                return Ok(cargo);
+            }
+            catch (BusinessHttpResponseException ex)
+            {
+                return StatusCode((int)ex.Response.StatusCode, new { Succes = false, Response = ex.Response });
+            }
+            catch (Exception ex)
+            {
+                return BadRequest(new { Succes = false, Error = ex.Message });
+            }
+        }
+
         [HttpDelete, Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
         [Route("api/[controller]/{id}")]
         public async Task<IActionResult> DeletarCargo(int id)

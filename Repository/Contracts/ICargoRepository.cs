@@ -8,6 +8,7 @@ namespace Ecclesia.Repository.Contracts
         Task UpdateCargo(Cargo cargo);
         Task<Cargo> GetCargo(int id);
         Task<List<Cargo>> GetAllCargos(string descricao);
+        Task<List<Cargo>> GetAllCargos();
         Task DeleteCargo(int id);
     }
 }

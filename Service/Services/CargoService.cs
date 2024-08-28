@@ -27,6 +27,12 @@ namespace Ecclesia.Service.Services
             return cargos.ToList();
         }
 
+        public async Task<List<Cargo>> GetAllCargos()
+        {
+            var cargos = await _repository.GetAllCargos();
+            return cargos.ToList();
+        }
+
         public async Task<Cargo> GetCargo(int id)
         {
             var cargo = await _repository.GetCargo(id);
